@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
@@ -12,6 +12,10 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './Hospitalbloodbank.css'
 import SwipeableEdgeDrawer from '../Components/SwipeableEdgeDrawer';
 import Header from '../Components/Header';
+import HospitalDashboard from '../Components/HospitalPages/HospitalDashboard';
+import HospitalRequest from '../Components/HospitalPages/HospitalRequest';
+import HospitalDonations from '../Components/HospitalPages/HospitalDonations';
+import { hospitalViewContext } from '../Contexts/ContextShare';
 
 const drawerBleeding = 56;
 
@@ -36,6 +40,8 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function Hospitalbloodbank(props) {
+    const { hospitalviewResponse, setHospitalviewresponse } = useContext(hospitalViewContext)
+
 
     const { window } = props;
     const [open, setOpen] = React.useState(false);
@@ -102,8 +108,12 @@ function Hospitalbloodbank(props) {
                         {/* <Skeleton variant="rectangular" height="100%" /> */}
 
                         <div className='menu-card'>
+
                             <div style={{ backgroundColor: "#006270" }}><i class="ri-service-fill"></i><p>Donate</p></div>
+
+
                             <div style={{ backgroundColor: "#009394" }}><i class="ri-hand-heart-fill"></i><p>Request</p></div>
+
                             <div style={{ backgroundColor: "#00e0c7" }}><i class="ri-dashboard-fill"></i><p>Dashboard</p></div>
 
                         </div>
@@ -111,9 +121,17 @@ function Hospitalbloodbank(props) {
                     </StyledBox>
                 </SwipeableDrawer>
             </Root>
-hgffgljglj
+            {hospitalviewResponse === "donate" &&
+                <HospitalDonations />}
+
+            {hospitalviewResponse === "request" &&
+
+                <HospitalRequest />}
+            {hospitalviewResponse === "dashboard" &&
+            <HospitalDashboard />}
+
         </div>
-        );
+    );
 }
 
 SwipeableEdgeDrawer.propTypes = {

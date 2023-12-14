@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import Header from '../Components/Header'
 import Footer from '../Components/Footer'
 import './Hospital.css'
+import { useNavigate } from 'react-router-dom'
+import { hospitalViewContext } from '../Contexts/ContextShare'
+
 
 export default function Hospital() {
+  const {hospitalviewResponse, setHospitalviewresponse} = useContext(hospitalViewContext)
+
+  const navigate = useNavigate()
+  const handlehospitalview = (val) => {
+    setHospitalviewresponse(val)
+    navigate('/Hospitalbloodbank')
+  }
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
 
   return (
     <div>
@@ -12,7 +28,6 @@ export default function Hospital() {
         <Header />
         {/* landing */}
         <div className='hospital-container'>
-
           <div className='hospital-section'>
             <div className='hospital-content-section'>
 
@@ -33,9 +48,10 @@ export default function Hospital() {
         <div className='hospital-pages-section'>
           <h1>Equilibrium</h1>
           <div className='hospital-pages'>
-            <div>Donate</div>
-            <div>Requests</div>
-            <div>Dashboard</div>
+
+            <div onClick={() => handlehospitalview("donate")}>Donate</div>
+            <div onClick={() => handlehospitalview("request")}>Requests</div>
+            <div onClick={() => handlehospitalview("dashboard")}>Dashboard</div>
 
           </div>
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
@@ -10,6 +10,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import './SwipeableEdgeDrawer.css'
+import { personViewContext } from '../Contexts/ContextShare';
 
 const drawerBleeding = 56;
 
@@ -34,11 +35,16 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 function SwipeableEdgeDrawer(props) {
+    
+    const { personviewresponse, setPersonviewresponse } = React.useContext(personViewContext)
+    const handlepersonview = (val) => {
+        setPersonviewresponse(val)
+    }    
     const { window } = props;
-    const [open, setOpen] = React.useState(false);
+    // const [open, setOpen] = React.useState(false);
 
     const toggleDrawer = (newOpen) => () => {
-        setOpen(newOpen);
+        props.setOpen(newOpen);
     };
 
     // This is used only for the example
@@ -55,18 +61,18 @@ function SwipeableEdgeDrawer(props) {
                     },
                 }}
             />
-            <Box sx={{ textAlign: 'center', pt: 1 ,backgroundColor:' rgba(0, 0, 0,0)'}}>
+            {/* <Box sx={{ textAlign: 'center', pt: 1 ,backgroundColor:' rgba(0, 0, 0,0)'}}>
                 <div onClick={toggleDrawer(true)} sx={{backgroundColor:' rgba(0, 0, 0,0)'}}>
                     <div className='menu-icon' sx={{backgroundColor:' rgba(0, 0, 0,0)'}}>
                         <i className=" me-2 ri-menu-5-line"></i>
                         <div>Menu</div>
                     </div>
                 </div>
-            </Box>
+            </Box> */}
             <SwipeableDrawer
                 container={container}
                 anchor="bottom"
-                open={open}
+                open={props.open}
 
                 onClose={toggleDrawer(false)}
                 onOpen={toggleDrawer(true)}
@@ -104,11 +110,9 @@ function SwipeableEdgeDrawer(props) {
                     {/* <Skeleton variant="rectangular" height="100%" /> */}
                     
                     <div className='menu-card'>
-                        <div style={{backgroundColor:"#006270"}}><i class="ri-service-fill"></i><p>Donate</p></div>
-                        <div style={{backgroundColor:"#009394"}}><i class="ri-hand-heart-fill"></i><p>Request</p></div>
-                        <div style={{backgroundColor:"#00e0c7"}}><i class="ri-history-fill"></i><p>Actions</p></div>
-                        <div style={{backgroundColor:"#62d99f"}}><i class="ri-dashboard-fill"></i><p>Dashboard</p></div>
-                        
+                        <div style={{backgroundColor:"#006270"}}><i class="ri-service-fill"></i><p onClick={() => handlepersonview("donate")}>Donate</p></div>
+                        <div style={{backgroundColor:"#009394"}}><i class="ri-hand-heart-fill"></i><p onClick={() => handlepersonview("receive")}>Receive</p></div>
+                        <div style={{backgroundColor:"#00e0c7"}}><i class="ri-history-fill"></i><p onClick={() => handlepersonview("action")}>Action</p></div>                        
                     </div>
 
                 </StyledBox>

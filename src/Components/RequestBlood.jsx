@@ -18,8 +18,8 @@ export default function RequestBlood() {
 
 
     const handleOptionSelect = (val) => {
-    setSelectedBloodGroup(val)
-    setOpen(!open)
+        setSelectedBloodGroup(val)
+        setOpen(!open)
     }
 
     return (
